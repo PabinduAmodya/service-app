@@ -80,7 +80,7 @@ export const loginUser = async (req, res) => {
         return res.status(400).json({ error: 'Wrong Password!' });
       }
   
-      // Respond without a token
+      // Respond with a token
       const token = jwt.sign(user , "Secret_Key-7973")
       
       res.json({
@@ -96,6 +96,7 @@ export const loginUser = async (req, res) => {
       res.status(500).json({ error: 'Error logging in: ' + error.message });
     }
   };
+
 
 
 
