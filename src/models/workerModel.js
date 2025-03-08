@@ -9,4 +9,6 @@ class Worker extends User {
   }
 }
 
+
+
 export default Worker;
