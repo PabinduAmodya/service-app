@@ -6,6 +6,7 @@ import { db } from './firebase.js';
 import userRoutes from './routes/userRoutes.js';
 import workerRoutes from './routes/workerRoutes.js';
 import workRequestRoutes from './routes/workRequestRoutes.js';
+import chatRoutes from './routes/chatRoutes.js';
 import jwt from 'jsonwebtoken'
 
 dotenv.config();
@@ -45,6 +46,7 @@ app.use(
 app.use('/api/users', userRoutes);
 app.use('/api/workers', workerRoutes); // Fixed incorrect import
 app.use('/api/requests', workRequestRoutes);
+app.use('/api/chats', chatRoutes);
 
 
 // Test Firebase connection
