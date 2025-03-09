@@ -2,7 +2,7 @@ import { db } from '../firebase.js';
 import User from '../models/userModel.js';
 import Worker from '../models/workerModel.js';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 export const registerUser = async (req, res) => {
 
@@ -76,6 +76,9 @@ export const registerUser = async (req, res) => {
 
 
 export const loginUser = async (req, res) => {
+
+  const newUserData=req.body
+
   try {
     const { email, password } = req.body;
 
@@ -120,6 +123,9 @@ export const loginUser = async (req, res) => {
 
 // Function to get all workers
 export const getAllWorkers = async (req, res) => {
+
+
+  
   try {
       const workersSnapshot = await db.collection('users').where('role', '==', 'worker').get();
       

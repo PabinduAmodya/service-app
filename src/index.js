@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import { db } from './firebase.js';
 import userRoutes from './routes/userRoutes.js';
 import workerRoutes from './routes/workerRoutes.js';
+import workRequestRoutes from './routes/workRequestRoutes.js';
 import jwt from 'jsonwebtoken'
 
 dotenv.config();
@@ -43,6 +44,8 @@ app.use(
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/workers', workerRoutes); // Fixed incorrect import
+app.use('/api/requests', workRequestRoutes);
+
 
 // Test Firebase connection
 app.get('/test', async (req, res) => {
