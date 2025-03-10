@@ -44,7 +44,7 @@ app.use(
 
 // Routes
 app.use('/api/users', userRoutes);
-app.use('/api/workers', workerRoutes); // Fixed incorrect import
+app.use('/api/workers', workerRoutes); 
 app.use('/api/requests', workRequestRoutes);
 app.use('/api/chats', chatRoutes);
 
