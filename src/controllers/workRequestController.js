@@ -116,8 +116,9 @@ export const getWorkerWorkRequests = async (req, res) => {
       return res.status(200).json({ message: 'No work requests found', requests: [] });
     }
 
+    // Map each request and add requestId as 'id' in response
     const requests = requestsSnapshot.docs.map(doc => ({
-      id: doc.id,
+      requestId: doc.id,  // Adding requestId field to the response
       ...doc.data()
     }));
 
@@ -126,6 +127,7 @@ export const getWorkerWorkRequests = async (req, res) => {
     res.status(500).json({ error: 'Error fetching worker work requests: ' + error.message });
   }
 };
+
 
 // Get a specific work request by ID
 export const getWorkRequestById = async (req, res) => {
