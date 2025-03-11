@@ -1,8 +1,8 @@
 import { db } from '../firebase.js';
 import { v4 as uuidv4 } from 'uuid';
-import { authenticateUser } from '../index.js'; // ✅ Import authentication middleware
+import { authenticateUser } from '../index.js';
 
-// 📌 Start a chat (Check if chat exists, otherwise create)
+//  Start a chat (Check if chat exists, otherwise create)
 export const startChat = async (req, res) => {
     try {
         const { workerId } = req.body;
@@ -40,11 +40,11 @@ export const startChat = async (req, res) => {
     }
 };
 
-// 📌 Send a message
+// Send a message
 export const sendMessage = async (req, res) => {
     try {
         const { chatId, message } = req.body;
-        const senderId = req.user.id; // ✅ Get sender ID from token
+        const senderId = req.user.id; //  Get sender ID from token
 
         if (!chatId || !message) {
             return res.status(400).json({ error: 'Missing required fields' });
@@ -70,7 +70,7 @@ export const sendMessage = async (req, res) => {
     }
 };
 
-// 📌 Get messages of a chat
+// Get messages of a chat
 export const getMessages = async (req, res) => {
     try {
         const { chatId } = req.params;
