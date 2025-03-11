@@ -1,10 +1,12 @@
-import { db } from '../firebase.js'; 
-import { v4 as uuidv4 } from 'uuid'; // To generate unique IDs
+import { db } from '../firebase.js';
+import { v4 as uuidv4 } from 'uuid';
+import { authenticateUser } from '../index.js'; // ✅ Import authentication middleware
 
 // 📌 Start a chat (Check if chat exists, otherwise create)
 export const startChat = async (req, res) => {
     try {
-        const { userId, workerId } = req.body;
+        const { workerId } = req.body;
+        const userId = req.user.id; // ✅ Get user ID from token
 
         // Check if a chat already exists
         const chatQuery = await db.collection('chats')
@@ -15,22 +17,21 @@ export const startChat = async (req, res) => {
         chatQuery.forEach(doc => {
             const data = doc.data();
             if (data.users.includes(workerId)) {
-                chatId = doc.id; 
+                chatId = doc.id;
             }
         });
 
-        // If chat exists, return existing chat ID
         if (chatId) {
             return res.status(200).json({ chatId });
         }
 
-        // If chat doesn't exist, create a new chat
+        // Create new chat
         const newChat = {
             users: [userId, workerId],
             lastMessage: '',
             timestamp: new Date().toISOString()
         };
-        
+
         const chatRef = await db.collection('chats').add(newChat);
         res.status(201).json({ chatId: chatRef.id });
 
@@ -42,9 +43,10 @@ export const startChat = async (req, res) => {
 // 📌 Send a message
 export const sendMessage = async (req, res) => {
     try {
-        const { chatId, senderId, message } = req.body;
+        const { chatId, message } = req.body;
+        const senderId = req.user.id; // ✅ Get sender ID from token
 
-        if (!chatId || !senderId || !message) {
+        if (!chatId || !message) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
@@ -55,10 +57,7 @@ export const sendMessage = async (req, res) => {
             read: false
         };
 
-        // Add message to Firestore
         await db.collection('chats').doc(chatId).collection('messages').add(messageData);
-
-        // Update last message in chat
         await db.collection('chats').doc(chatId).update({
             lastMessage: message,
             timestamp: new Date().toISOString()
