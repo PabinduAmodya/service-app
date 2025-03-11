@@ -8,5 +8,5 @@ class User {
     }
   }
   
-  export default User;  //on
+  export default User;  
   
