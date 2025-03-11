@@ -7,6 +7,8 @@ import userRoutes from './routes/userRoutes.js';
 import workerRoutes from './routes/workerRoutes.js';
 import workRequestRoutes from './routes/workRequestRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js'; // Import review routes
+
 import jwt from 'jsonwebtoken';
 
 dotenv.config();
@@ -41,6 +43,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/workers', workerRoutes);
 app.use('/api/requests', authenticateUser, workRequestRoutes); // Protect work requests
 app.use('/api/chats', authenticateUser, chatRoutes); // Protect chats
+app.use('/api/reviews', authenticateUser,reviewRoutes); // Add review routes
 
 // Test Firebase connection
 app.get('/test', async (req, res) => {
